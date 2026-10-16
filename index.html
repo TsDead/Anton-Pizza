@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Антон pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6efe0;
+    --paper:#fbf6ea;
+    --ink:#1d1512;
+    --red:#c8281e;
+    --red-dark:#9c1d15;
+    --line:#1d1512;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'PT Serif',Georgia,'Times New Roman',serif;
+    font-size:18px;
+    line-height:1.55;
+  }
+  .page{max-width:1120px;margin:0 auto;padding:0 28px}
+  h1,h2,h3,.display{font-family:'Playfair Display',Georgia,serif;font-weight:900;line-height:1}
+
+  /* top strip */
+  .strip{
+    border-bottom:3px double var(--line);
+    padding:10px 0;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+
+  /* masthead / cover */
+  .cover{padding:36px 0 44px;border-bottom:3px solid var(--line)}
+  .cover-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center}
+  .issue{
+    display:inline-block;
+    background:var(--red);color:var(--paper);
+    padding:5px 14px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .cover h1{
+    font-size:clamp(64px,11vw,148px);
+    letter-spacing:-.03em;
+  }
+  .cover h1 em{color:var(--red);font-style:italic;font-weight:900}
+  .tagline{
+    font-family:'Playfair Display',Georgia,serif;
+    font-style:italic;font-weight:500;
+    font-size:clamp(22px,2.6vw,30px);
+    margin:22px 0 30px;
+    max-width:520px;
+    line-height:1.25;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--red);color:var(--paper);
+    border:3px solid var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+    padding:16px 30px;
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:900;font-size:22px;
+    cursor:pointer;
+    transition:transform .12s, box-shadow .12s, background .12s;
+  }
+  .btn:hover{background:var(--red-dark);transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+  .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+  .cover-art{display:flex;justify-content:center}
+  .cover-art img{width:100%;max-width:460px;aspect-ratio:1/1;object-fit:cover;border:4px solid var(--ink);box-shadow:12px 12px 0 var(--red);transform:rotate(1.5deg);display:block}
+
+  /* contents */
+  .toc{
+    display:flex;gap:34px;flex-wrap:wrap;align-items:baseline;
+    padding:16px 0;border-bottom:1px solid var(--line);
+    font-size:15px;text-transform:uppercase;letter-spacing:.12em;
+  }
+  .toc b{font-family:'Playfair Display',Georgia,serif;font-size:18px;letter-spacing:0;text-transform:none;margin-right:6px}
+  .toc a{color:var(--ink);text-decoration:none;border-bottom:2px solid transparent}
+  .toc a span{color:var(--red);font-weight:700;margin-right:6px}
+  .toc a:hover{border-bottom-color:var(--red)}
+
+  /* menu spread */
+  section{padding:54px 0 10px}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:10px;flex-wrap:wrap}
+  .sec-head .num{font-family:'Playfair Display',serif;font-weight:900;font-size:20px;color:var(--red)}
+  .sec-head h2{font-size:clamp(40px,6vw,72px);letter-spacing:-.02em}
+  .lede{max-width:640px;font-style:italic;margin-bottom:34px;border-left:4px solid var(--red);padding-left:16px}
+
+  .menu{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    border-top:3px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .article{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:28px 26px 30px;
+    background:var(--paper);
+    position:relative;
+  }
+  .article .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:10px}
+  .article .row{display:flex;gap:20px;align-items:flex-start}
+  .article .photo{flex:0 0 150px;width:150px;height:150px;object-fit:cover;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+  .article h3{font-size:30px;margin-bottom:8px;letter-spacing:-.01em}
+  .article p{font-size:16px}
+  .article p:first-letter{
+    font-family:'Playfair Display',serif;font-weight:900;
+    font-size:2.4em;float:left;line-height:.9;margin:4px 8px 0 0;color:var(--red);
+  }
+  .price{
+    margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:14px;letter-spacing:.1em;text-transform:uppercase;
+  }
+  .price strong{font-family:'Playfair Display',serif;font-size:32px;letter-spacing:0}
+
+  /* inserts */
+  .inserts{display:grid;grid-template-columns:1.4fr 1fr;gap:0;margin-top:40px;border:3px solid var(--line)}
+  .quote{padding:34px 34px;background:var(--red);color:var(--paper)}
+  .quote .mark{font-family:'Playfair Display',serif;font-size:90px;line-height:.6;display:block;opacity:.5}
+  .quote p{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.2}
+  .quote small{display:block;margin-top:14px;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+  .bignum{padding:30px;text-align:center;background:var(--paper);display:flex;flex-direction:column;justify-content:center}
+  .bignum .n{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(70px,10vw,120px);line-height:.9;color:var(--red)}
+  .bignum .t{font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+
+  /* history */
+  .history{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .history .cols{columns:2;column-gap:34px;column-rule:1px solid var(--line)}
+  .history p{margin-bottom:14px;text-align:left;hyphens:auto}
+
+  /* contacts */
+  footer{margin-top:60px;border-top:3px double var(--line);padding:30px 0 50px}
+  .contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+  .contacts a{color:var(--red);font-weight:700;text-decoration:none;border-bottom:2px solid var(--red)}
+  .contacts a:hover{background:var(--red);color:var(--paper)}
+  .contacts h4{font-family:'Playfair Display',serif;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+  .contacts p{font-size:18px}
+  .copy.credits{text-transform:none;letter-spacing:0;font-size:12px;max-width:760px;line-height:1.4}
+  .copy{margin-top:30px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+
+  /* modal */
+  .overlay{
+    position:fixed;inset:0;background:rgba(29,21,18,.7);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:50;
+  }
+  .overlay.open{display:flex}
+  .modal{
+    background:var(--paper);border:4px solid var(--ink);box-shadow:10px 10px 0 var(--red);
+    max-width:480px;width:100%;padding:36px 32px;text-align:center;
+    animation:pop .25s ease-out;
+  }
+  @keyframes pop{from{transform:scale(.85) rotate(-2deg);opacity:0}to{transform:none;opacity:1}}
+  .modal .stamp{
+    display:inline-block;border:3px solid var(--red);color:var(--red);
+    padding:4px 14px;font-family:'Playfair Display',serif;font-weight:900;
+    letter-spacing:.14em;text-transform:uppercase;transform:rotate(-4deg);margin-bottom:18px;
+  }
+  .modal h3{font-size:34px;margin-bottom:12px}
+  .modal p{margin-bottom:24px}
+  .modal .btn{font-size:18px;padding:12px 24px}
+
+  @media (max-width:820px){
+    .cover-grid,.history,.inserts{grid-template-columns:1fr}
+    .menu{grid-template-columns:1fr}
+    .history .cols{columns:1}
+    .article .photo{flex-basis:96px;width:96px;height:96px}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="strip">
+    <span>Ежедневный вкусный журнал</span>
+    <span>Выпуск №1</span>
+    <span>Цена номера: одна улыбка</span>
+  </div>
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="cover-grid">
+      <div>
+        <span class="issue">Выпуск №1 · Главная тема: пицца</span>
+        <h1>Антон <em>pizza</em></h1>
+        <p class="tagline">Вкус, который понятен с первого кусочка.</p>
+        <button class="btn" id="openFree">Пицца на халяву</button>
+      </div>
+      <div class="cover-art"><img src="anton-cover.jpg" alt="Пицца Маргарита с хрустящим бортиком"></div>
+    </div>
+  </header>
+
+  <!-- CONTENTS -->
+  <nav class="toc" aria-label="Оглавление">
+    <b>В номере:</b>
+    <a href="#menu"><span>03</span>Меню</a>
+    <a href="#history"><span>07</span>История</a>
+    <a href="#contacts"><span>09</span>Контакты</a>
+  </nav>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="sec-head">
+      <span class="num">№ 03</span>
+      <h2>Меню номера</h2>
+    </div>
+    <p class="lede">Четыре пиццы, четыре характера. Выбирайте героя этого выпуска.</p>
+
+    <div class="menu">
+      <article class="article">
+        <div class="kicker">Репортаж · Классика</div>
+        <div class="row">
+          <img class="photo" src="anton-klassika.jpg" alt="Пицца Классика Антона" loading="lazy">
+          <div>
+            <h3>Классика Антона</h3>
+            <p>Томатный соус, моцарелла и свежий базилик. Простая история, которую хочется перечитывать каждый день.</p>
+          </div>
+        </div>
+        <div class="price"><span>Цена выпуска</span><strong>450 ₽</strong></div>
+      </article>
+
+      <article class="article">
+        <div class="kicker">Хит сезона · Мясное</div>
+        <div class="row">
+          <img class="photo" src="anton-pepperoni.jpg" alt="Пицца Пепперони-взрыв" loading="lazy">
+          <div>
+            <h3>Пепперони-взрыв</h3>
+            <p>Много пикантной пепперони, тянущийся сыр и хрустящий край. Громкий заголовок, который оправдывает себя.</p>
+          </div>
+        </div>
+        <div class="price"><span>Цена выпуска</span><strong>550 ₽</strong></div>
+      </article>
+
+      <article class="article">
+        <div class="kicker">Интервью · Сырная</div>
+        <div class="row">
+          <img class="photo" src="anton-syrnaya.jpg" alt="Пицца Сырная буря" loading="lazy">
+          <div>
+            <h3>Сырная буря</h3>
+            <p>Моцарелла, чеддер, пармезан и мягкий сливочный соус. Для тех, у кого сыра никогда не бывает слишком много.</p>
+          </div>
+        </div>
+        <div class="price"><span>Цена выпуска</span><strong>520 ₽</strong></div>
+      </article>
+
+      <article class="article">
+        <div class="kicker">Колонка острого · Огонь</div>
+        <div class="row">
+          <img class="photo" src="anton-ostraya.jpg" alt="Пицца Острая неделя" loading="lazy">
+          <div>
+            <h3>Острая неделя</h3>
+            <p>Халапеньо, острая колбаска и перчик чили. Читать только тем, кто любит пожарче.</p>
+          </div>
+        </div>
+        <div class="price"><span>Цена выпуска</span><strong>580 ₽</strong></div>
+      </article>
+    </div>
+
+    <div class="inserts">
+      <div class="quote">
+        <span class="mark">“</span>
+        <p>Хорошая пицца как хорошая статья: начинается с первого кусочка и не отпускает до последнего.</p>
+        <small>Цитата дня</small>
+      </div>
+      <div class="bignum">
+        <div class="n">4</div>
+        <div class="t">пиццы, одна любимая</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="history">
+    <div class="sec-head">
+      <span class="num">№ 07</span>
+      <h2>История</h2>
+    </div>
+    <div class="history">
+      <p class="lede" style="margin:0">Как простая идея про тесто, сыр и томаты превратилась в пиццерию, которую хочется читать.</p>
+      <div class="cols">
+        <p>Всё началось с рецепта теста: тонкого в середине, пышного по краю и обязательно хрустящего. Мы пробовали разные виды муки, пока вкус не стал именно таким, как нужно.</p>
+        <p>Соус готовится из спелых томатов, без лишнего. Сыр берём тянущийся, чтобы каждый кусочек был как красивая обложка.</p>
+        <p>Мы оставили в меню только четыре пиццы. Это не ограничение, а редакционная политика: лучше четыре отличных, чем сорок средних.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <footer id="contacts">
+    <div class="sec-head">
+      <span class="num">№ 09</span>
+      <h2 style="font-size:clamp(34px,5vw,56px)">Контакты</h2>
+    </div>
+    <div class="contacts">
+      <div><h4>Адрес</h4><p>г. Ваш город,<br>ул. Пиццевая, 1</p></div>
+      <div><h4>Телефон</h4><p><a href="tel:+79105650340">+7-910-565-03-40</a></p></div>
+      <div><h4>Telegram</h4><p><a href="https://t.me/novac0de" target="_blank" rel="noopener">@novac0de</a></p></div>
+      <div><h4>Контактное лицо</h4><p>Ведин Степан</p></div>
+      <div><h4>Часы работы</h4><p>Ежедневно<br>с 10:00 до 23:00</p></div>
+    </div>
+    <p class="copy credits">Фото (Wikimedia Commons): обложка — Fabryx98, CC BY-SA 4.0; «Классика Антона» — Mario56, CC BY-SA 3.0; «Пепперони-взрыв» — BullDawg2021, CC BY 4.0; «Сырная буря» — Andy Li, CC0; «Острая неделя» — JIP, CC BY-SA 4.0.</p>
+    <p class="copy">Антон pizza · Выпуск №1 · Все права на вкус защищены</p>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mt">
+  <div class="modal">
+    <div class="stamp">Срочный выпуск</div>
+    <h3 id="mt">Только сегодня!</h3>
+    <p>(Нет, шучу, но попробовать стоит.)</p>
+    <button class="btn" id="closeFree">Смотреть меню</button>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('overlay');
+  const open = () => overlay.classList.add('open');
+  const close = () => overlay.classList.remove('open');
+  document.getElementById('openFree').addEventListener('click', open);
+  document.getElementById('closeFree').addEventListener('click', () => {
+    close();
+    document.getElementById('menu').scrollIntoView({behavior:'smooth'});
+  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+</script>
+</body>
+</html>
